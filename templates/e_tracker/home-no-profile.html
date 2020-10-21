@@ -22,11 +22,8 @@
     <h1>Enter your data</h1>
     <div class="form">
             <form method="POST">
-                {% csrf_token %}
-
-
-                <input type="hidden" name="csrfmiddlewaretoken"
-                       value="97MmAxmrs7yPXUamEdIgRY80OHEP383f6VukAC6agPNIW60LqTcnIQlM6YCYPjc0">
+            {% csrf_token %}
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <label for="budget">Budget</label>
                 <input type="number" name="budget" required="" id="id_budget">
 
