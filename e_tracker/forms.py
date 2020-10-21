@@ -18,6 +18,7 @@ class ExpenseForm(forms.ModelForm):
     class Meta:
         model = Expense
         field = ['title', 'image_url', 'description', 'price']
+        exclude=['profile']
         widgets = {
             'title': forms.TextInput(),
             'image_url': forms.TextInput(),
