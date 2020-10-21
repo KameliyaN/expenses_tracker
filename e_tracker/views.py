@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def home_page(request):
-    pass
+    return render(request,'e_tracker/home-no-profile.html')
 
 
 def create_expense(request):
