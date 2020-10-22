@@ -25,57 +25,63 @@
 
     <div>
         <h1>Summary</h1>
-        <h1>
-            <ul class="expenses-list">
+        {% if expenses %}
+            <h1>
+                <ul class="expenses-list">
 
-                <li class="blue">1500$</li>
+                    <li class="blue">{{ profile.budget }}$</li>
+                    {% for expense in expenses %}
+                        <li class="red"> - {{ expense.price }}$</li>
 
-                <li class="red"> - 1000.0$</li>
+                    {% endfor %}
 
-                <li class="red"> - 400.0$</li>
-
-                <li class="green">= 100.0$ left</li>
-            </ul>
-        </h1>
+                    <li class="green">= {{ profile.budget }}$ left</li>
+                </ul>
+            </h1>
+        {% endif %}
     </div>
 
     <h1>My Expenses</h1>
     <button><a href="{% url 'create expense' %}">Add Expense</a></button>
-    <div class="expenses-container">
+    {% if expenses %}
 
-        <div class="expense-container">
-            <h2>Electrical Piano</h2>
-            <hr>
-            <img src="https://www.pngkit.com/png/full/307-3075914_free-piano-clipart-piano-png.png">
-            <p>I bought myself a new piano to improve my skills</p>
-            <div class="expense-detail">
-                <div>
-                    <p>Price: 1000.0$</p>
+            <div class="expenses-container">
+                {% for expense in expenses %}
+                <div class="expense-container">
+                    <h2>{{ expense.title }}</h2>
+                    <hr>
+                    <img src="{{ expense.image_url }}">
+                    <p>{{ expense.description }}</p>
+                    <div class="expense-detail">
+                        <div>
+                            <p>Price: {{ expense.price }}$</p>
+                        </div>
+                        <div class="right">
+                            <button class="edit"><a href="{% url 'edit expense' pk=expense.pk %}">Edit</a></button>
+                            <button class="delete"><a href="{% url 'delete expense' pk=expense.pk %}">Delete</a></button>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                <div class="right">
-                    <button class="edit"><a href="{% url 'edit expense' pk=pk %}">Edit</a></button>
-                    <button class="delete"><a href="{% url 'delete expense' pk=pk %}">Delete</a></button>
-                </div>
+
+{#        <div class="expense-container">#}
+{#            <h2>TV</h2>#}
+{#            <hr>#}
+{#            <img src="https://lh3.googleusercontent.com/proxy/nCJ4jT2qWgkNO95Y3YSePfew9lqa0AkeQoLLi5LM_ZbT_S_KdizZdZq3YzUm32kGNBk3DyM4eKwEmk0VX9esNR1NV5Ji480jF9pte79893Ml8C-kdw">#}
+{#            <p>My old tv broke, so I bought myself a new one.</p>#}
+{#            <div class="expense-detail">#}
+{#                <div>#}
+{#                    <p>Price: 400.0$</p>#}
+{#                </div>#}
+{#                <div class="right">#}
+{#                    <button class="edit"><a href="/edit/4">Edit</a></button>#}
+{#                    <button class="delete"><a href="/delete/4">Delete</a></button>#}
+{#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
             </div>
-        </div>
+    {% endif %}
 
-        <div class="expense-container">
-            <h2>TV</h2>
-            <hr>
-            <img src="https://lh3.googleusercontent.com/proxy/nCJ4jT2qWgkNO95Y3YSePfew9lqa0AkeQoLLi5LM_ZbT_S_KdizZdZq3YzUm32kGNBk3DyM4eKwEmk0VX9esNR1NV5Ji480jF9pte79893Ml8C-kdw">
-            <p>My old tv broke, so I bought myself a new one.</p>
-            <div class="expense-detail">
-                <div>
-                    <p>Price: 400.0$</p>
-                </div>
-                <div class="right">
-                    <button class="edit"><a href="/edit/4">Edit</a></button>
-                    <button class="delete"><a href="/delete/4">Delete</a></button>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 </div>
 <footer>

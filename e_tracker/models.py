@@ -16,7 +16,7 @@ class Expense(models.Model):
     image_url = models.URLField()
     description = models.TextField()
     price = models.FloatField()
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True,related_name='expense')
 
     def __str__(self):
         return f'I am {self.title}'
