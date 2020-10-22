@@ -59,7 +59,8 @@ def delete_expense(request):
 
 
 def profile_page(request):
-    return None
+    profile=Profile.objects.get(request.user)
+    return render(request, 'e_tracker/profile.html')
 
 
 def profile_edit(request):
