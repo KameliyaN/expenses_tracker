@@ -37,15 +37,18 @@ def home_page(request):
                 profile = form.save()
                 profile.save()
                 context = {'expenses': profile.expense.all()
+
                            }
-                return render(request, 'e_tracker/home-with-profile.html', context)
-    elif request.method == 'GET' and request.GET:
-        profile = Profile(request.GET)
+        return render(request, 'e_tracker/home-with-profile.html')
+
+    elif request.method == 'GET':
+        profile = Profile(request.GET).id
+        print(profile)
         context = {'profile': profile}
+        if profile:
+            return render(request, 'e_tracker/home-with-profile.html', context)
 
-        return render(request, 'e_tracker/home-with-profile.html', context)
-
-    return render(request, 'e_tracker/home-no-profile.html')
+        return render(request, 'e_tracker/home-no-profile.html')
 
 
 def create_expense(request):

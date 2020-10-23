@@ -21,9 +21,9 @@
 
     <h1>Enter your data</h1>
     <div class="form">
-        <form method="POST" action="e_tracker/home-no-profile.html">
+        <form method="POST">
             {% csrf_token %}
-            <input type="hidden" name="csrfmiddlewaretoken" value=" {{ csrf_token }}">#}
+            <input type="hidden" name="{csrfmiddlewaretoken}" value=" {{ csrf_token }}">
             <label for="budget">Budget</label>
             <input type="number" name="budget" required="" id="id_budget">
 
