@@ -1,18 +1,19 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.views import generic
 
-from e_tracker.forms import ProfileForm
+from e_tracker.forms import ProfileForm, ExpenseForm
 from e_tracker.models import Profile, Expense
 
 
-@login_required
-def home_page(request):
+# @login_required
+def home_page(request, pk=None):
     if request.method == 'POST':
         form = ProfileForm(request.POST)
+
         last_name = request.POST.get('last_name')
         if form.is_valid():
 
@@ -43,7 +44,7 @@ def home_page(request):
 
     elif request.method == 'GET':
         profile = Profile(request.GET).id
-        print(profile)
+
         context = {'profile': profile}
         if profile:
             return render(request, 'e_tracker/home-with-profile.html', context)
@@ -51,8 +52,23 @@ def home_page(request):
         return render(request, 'e_tracker/home-no-profile.html')
 
 
-def create_expense(request):
-    return None
+def create_expense(request, pk=None):
+    print(request.GET[pk])
+    if request.method == "POST":
+        form = ExpenseForm(request.POST)
+
+        profile = get_object_or_404(Profile, pk=pk)
+
+        if form.is_valid():
+            created_expense = form.save()
+
+            profile.expense.add(created_expense)
+            created_expense.save()
+            context = {
+                'created_expense': created_expense
+            }
+            return render(request, 'e_tracker/home-with-profile.html', context)
+    return render(request, 'e_tracker/expense-create.html')
 
 
 def edit_expense(request):
