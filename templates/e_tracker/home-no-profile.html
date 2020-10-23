@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 {% load static %}
 <html lang="en">
 <head>
@@ -21,20 +21,20 @@
 
     <h1>Enter your data</h1>
     <div class="form">
-            <form method="POST" action="e_tracker/home-no-profile.html">
+        <form method="POST" action="e_tracker/home-no-profile.html">
             {% csrf_token %}
-                <input type="hidden" name=" next " value=" {{ next }}">
-                <label for="budget">Budget</label>
-                <input type="number" name="budget" required="" id="id_budget">
+            <input type="hidden" name="csrfmiddlewaretoken" value=" {{ csrf_token }}">#}
+            <label for="budget">Budget</label>
+            <input type="number" name="budget" required="" id="id_budget">
 
-                <label for="firstName">First Name</label>
-                <input type="text" name="first_name" maxlength="15" required="" id="id_first_name">
+            <label for="firstName">First Name</label>
+            <input type="text" name="first_name" maxlength="15" required="" id="id_first_name">
 
-                <label for="lastName">Last Name</label>
-                <input type="text" name="last_name" maxlength="15" required="" id="id_last_name">
+            <label for="lastName">Last Name</label>
+            <input type="text" name="last_name" maxlength="15" required="" id="id_last_name">
 
-                <input type="submit" value="Submit">
-            </form>
+            <input type="submit" value="Submit">
+        </form>
     </div>
 
 </div>
@@ -45,5 +45,4 @@
 
 </body>
 </html>
-{#csrfmiddlewaretoken#}
-{#{{ csrf_token }}#}
+
