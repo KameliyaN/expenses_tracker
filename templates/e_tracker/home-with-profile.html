@@ -29,13 +29,13 @@
             <h1>
                 <ul class="expenses-list">
 
-                    <li class="blue">{{ profile.budget }}$</li>
-                    {% for expense in expenses %}
-                        <li class="red"> - {{ expense.price }}$</li>
+                    <li class="blue">{{ budget }}$</li>
+                    {% for price in prices %}
+                        <li class="red"> - {{ price }}$</li>
 
                     {% endfor %}
 
-                    <li class="green">= {{ profile.budget }}$ left</li>
+                    <li class="green">= {{ left }}$ left</li>
                 </ul>
             </h1>
         {% endif %}
@@ -46,22 +46,23 @@
     {% if expenses %}
 
             <div class="expenses-container">
-                {% for expense in expenses %}
-                <div class="expense-container">
-                    <h2>{{ expense.title }}</h2>
-                    <hr>
-                    <img src="{{ expense.image_url }}">
-                    <p>{{ expense.description }}</p>
-                    <div class="expense-detail">
-                        <div>
-                            <p>Price: {{ expense.price }}$</p>
-                        </div>
-                        <div class="right">
-                            <button class="edit"><a href="{% url 'edit expense' pk=expense.pk %}">Edit</a></button>
-                            <button class="delete"><a href="{% url 'delete expense' pk=expense.pk %}">Delete</a></button>
-                        </div>
-                    </div>
-                    {% endfor %}
+
+                    <div class="expense-container">
+                         {% for expense in expenses %}
+                        <h2>{{ expense.title }}</h2>
+                        <hr>
+                            <img src="{{ expense.image_url }}">
+                            <p>{{ expense.description }}</p>
+                            <div class="expense-detail">
+                                <div>
+                                    <p>Price: {{ expense.price }}$</p>
+                                </div>
+                                <div class="right">
+                                    <button class="edit"><a href="{% url 'edit expense' pk=expense.pk %}">Edit</a></button>
+                                    <button class="delete"><a href="{% url 'delete expense' pk=expense.pk %}">Delete</a></button>
+                                </div>
+                            </div>
+                            {% endfor %}
                 </div>
 
 {#        <div class="expense-container">#}
