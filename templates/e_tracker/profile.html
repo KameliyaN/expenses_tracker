@@ -24,13 +24,13 @@
 <h1>Your Profile</h1>
 <div class="expenses-container">
     <div class="expense-container">
-        <h2>Tanya Staneva</h2>
+        <h2>{{ profile.first_name}} {{ profile.last_name }}</h2>
         <hr>
         <img src="{% static 'e_tracker/user.png' %}">
         <p>In your profile you can edit your profile data</p>
         <div class="expense-detail">
             <div>
-                <p>Budget Left: 100.0$</p>
+                <p>Budget Left:{{left }}$</p>
             </div>
             <div class="right">
                 <button class="edit"><a href="/profile/edit">Edit Profile</a></button>

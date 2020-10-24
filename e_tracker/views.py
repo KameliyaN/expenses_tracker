@@ -91,6 +91,7 @@ def create_expense(request):
         form = ExpenseForm(request.POST)
 
         if form.is_valid():
+            prof = Profile.objects.first()
             form.prof = form.save()
             form.prof.save()
             expenses = False if len(Expense.objects.all()) == 0 else Expense.objects.all()
@@ -111,26 +112,90 @@ def create_expense(request):
     return render(request, 'e_tracker/expense-create.html', {'form': form})
 
 
-def edit_expense(request):
-    return None
+def edit_expense(request, pk):
+    expense = Expense.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        form = ExpenseForm(instance=expense)
+        context = {
+            'expense': expense,
+            'form': form
+        }
+        return render(request, 'e_tracker/expense-edit.html', context)
+    form = ExpenseForm(request.POST, instance=expense)
+    if form.is_valid():
+        form.prof = form.save()
+        form.prof.save()
+        expenses = False if len(Expense.objects.all()) == 0 else Expense.objects.all()
+        budget = Profile.objects.first().budget
+        prices = [i.price for i in Expense.objects.all()]
+        left = budget - sum(prices)
+        context = {
+            'expenses': expenses,
+            'budget': budget,
+            'prices': prices,
+            'left': left,
+        }
+
+        return render(request, 'e_tracker/home-with-profile.html', context)
 
 
-def delete_expense(request):
-    return None
+def delete_expense(request, pk):
+    expense = Expense.objects.get(pk=pk)
+
+    if request.method == 'GET':
+        form = ExpenseForm(instance=expense)
+        context = {
+            'expense': expense,
+            'form': form
+        }
+        return render(request, 'e_tracker/expense-delete.html', context)
+
+    expense.delete()
+    expenses = False if len(Expense.objects.all()) == 0 else Expense.objects.all()
+    budget = Profile.objects.first().budget
+    prices = [i.price for i in Expense.objects.all()]
+    left = budget - sum(prices)
+    context = {
+        'expenses': expenses,
+        'budget': budget,
+        'prices': prices,
+        'left': left,
+    }
+
+    return render(request, 'e_tracker/home-with-profile.html', context)
 
 
 def profile_edit(request):
-    return None
+    profile = Profile.objects.first()
+    if request.method == 'GET':
+        context = {
+            'form': ProfileForm(instance=profile),
+            'profile': profile
+        }
+        return render(request, 'e_tracker/profile-edit.html', context)
+    form = ProfileForm(request.POST, instance=profile)
+    if form.is_valid():
+        form.save()
+        return redirect('profile')
 
 
 def profile_delete(request):
-    return None
+    profile = Profile.objects.first()
+    if request.method == 'GET':
+        return render(request, 'e_tracker/profile-delete.html')
+    profile.delete()
+    return redirect('home')
 
 
 def profile(request):
-    if request.method == 'POST':
-        pass
+    budget = Profile.objects.first().budget
+    prices = [i.price for i in Expense.objects.all()]
+    left = budget - sum(prices)
     context = {
-        'form': ProfileForm()
+        'form': ProfileForm(request.GET),
+        'profile': Profile.objects.first(),
+        'left': left
+
     }
     return render(request, 'e_tracker/profile.html', context)
