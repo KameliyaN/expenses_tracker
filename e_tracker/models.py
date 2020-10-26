@@ -13,11 +13,11 @@ class Profile(models.Model):
 
 class Expense(models.Model):
     prof = Profile.objects.first().id if Profile.objects.first() else 1
-    user = models.ForeignKey(to=Profile, default=prof, on_delete=models.CASCADE,related_name='user')
+    user = models.ForeignKey(to=Profile, default=prof, on_delete=models.CASCADE, related_name='user')
     title = models.CharField(max_length=50)
     image_url = models.URLField()
     description = models.TextField()
-    price = models.FloatField()
+    price = models.FloatField(default=0)
 
     # profile = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True, related_name='expense')
 
